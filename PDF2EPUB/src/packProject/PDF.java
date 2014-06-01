@@ -16,9 +16,9 @@ import com.itextpdf.text.pdf.PdfImportedPage;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfWriter;
 
-public class Lector {
-	  private static String INPUTFILE = "./PruebaPDF/prueba.pdf"; //"c:/temp/FirstPdf.pdf";
-	  private static String OUTPUTFILE = "./PruebaPDF/ReadPdf"+new Date().getTime()+".pdf";
+public class PDF {
+	  private static String INPUTFILE = "./Origin/PDF/prueba.pdf";
+	  private static String OUTPUTFILE = "./Output/PDF/ReadPDF"+new Date().getTime()+".pdf";
 
 	  public static void main(String[] args) throws DocumentException,
 	      IOException {

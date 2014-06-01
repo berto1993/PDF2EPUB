@@ -7,7 +7,7 @@ import com.itextpdf.text.Element;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 
-public class Prueba {
+public class PDF2 {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
