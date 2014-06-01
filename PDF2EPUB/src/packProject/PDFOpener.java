@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.Date;
 
+import com.itextpdf.text.Annotation;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
@@ -65,7 +66,9 @@ public class PDFOpener
 		{
 		    Image foto = Image.getInstance("./images/pingu.jpg");
 		    foto.scaleToFit(100, 100);
-		    foto.setAlignment(Chunk.ALIGN_MIDDLE);
+		    //foto.setAlignment(Chunk.ALIGN_MIDDLE);
+		    //Para poner comentarios
+		    foto.setAnnotation(new Annotation("Pingu", "La mascota"));;
 		    documento.add(foto);
 		}
 		catch ( Exception e )
