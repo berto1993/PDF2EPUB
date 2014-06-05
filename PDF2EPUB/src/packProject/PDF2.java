@@ -1,6 +1,7 @@
 package packProject;
 
 import java.io.FileOutputStream;
+import java.util.Date;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
@@ -13,7 +14,7 @@ public class PDF2 {
 		// TODO Auto-generated method stub
 		try {
 			      Document document = new Document();
-			      PdfWriter.getInstance(document, new FileOutputStream("./PruebaPDF/prueba.pdf"));
+			      PdfWriter.getInstance(document, new FileOutputStream("./Output/PDF/test"+new Date().getTime()+".pdf"));
 			      document.open();
 			      // Left
 			      Paragraph paragraph = new Paragraph("This is right aligned text");
