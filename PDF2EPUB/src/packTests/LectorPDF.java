@@ -1,4 +1,4 @@
-package packProject;
+package packTests;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -17,7 +17,7 @@ import com.itextpdf.text.xml.xmp.PdfSchema;
 
 public class LectorPDF {
 
-	public static void main(String[] args) {
+	public static String main(String[] args) {
 		// TODO Auto-generated method stub
 		PdfReader reader = null;
 		try {
@@ -34,23 +34,7 @@ public class LectorPDF {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} //Extracting the content from a particular page.
-        System.out.println(str);
-        
-        PdfDictionary schema = reader.getPageN(1);
-try {
-	schema.toPdf(PdfWriter.getInstance(new Document(), new FileOutputStream("./Output/PDF/pruebaTonta.pdf")), new FileOutputStream("./Output/PDF/pruebaTonta.pdf"));
-} catch (FileNotFoundException e) {
-	// TODO Auto-generated catch block
-	e.printStackTrace();
-} catch (IOException e) {
-	// TODO Auto-generated catch block
-	e.printStackTrace();
-} catch (DocumentException e) {
-	// TODO Auto-generated catch block
-	e.printStackTrace();
-}        	//	PdfTextExtractor.getTextFromPage(reader, pageNumber, new TextExtractionStrategye)
-        
-
-	}
+       return(str);
+       	}
 
 }

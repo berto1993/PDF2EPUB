@@ -1,4 +1,4 @@
-package packProject;
+package packTests;
 
 import java.io.FileOutputStream;
 import java.util.Date;

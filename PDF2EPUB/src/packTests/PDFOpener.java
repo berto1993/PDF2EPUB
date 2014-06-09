@@ -1,4 +1,4 @@
-package packProject;
+package packTests;
 
 import java.io.File;
 import java.io.FileNotFoundException;

@@ -1,4 +1,4 @@
-package packProject;
+package packTests;
 
 import java.awt.PageAttributes.MediaType;
 import java.io.File;
