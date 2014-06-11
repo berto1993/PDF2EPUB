@@ -1,5 +1,6 @@
 package packPDF;
 
+import java.io.Reader;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -22,7 +23,7 @@ public class BookmarSplitter
 	{
 		return myBookmarkList.size();
 	}
-	public void getMyBookmarkList()
+	private void loadMyBookmarkList()
 	{
 		java.util.List<HashMap<String, Object>> myAuxBookmarkList = SimpleBookmark.getBookmark(myReader);
 		//only will work if there are bookmarks
@@ -35,12 +36,11 @@ public class BookmarSplitter
 		{
 			levelBookmarks(myAuxBookmarkList, 0);
 			//The text will be converted to EPUB splitting wiht the first level bookmarks
-			splitByBookmarks();
 		}
 		
 		}
 
-	public void levelBookmarks(java.util.List<HashMap<String, Object>> pList ,int plevel) 
+	private  void levelBookmarks(java.util.List<HashMap<String, Object>> pList ,int plevel) 
 	{
 		java.util.List<HashMap<String, Object>> auxList = null;
 		for (int i = 0; i < pList.size(); i++)
@@ -58,24 +58,14 @@ public class BookmarSplitter
 			}	
 		}
 	}
-	
-	public Bookmark getBookmark(int n)
-	{
-		return myBookmarkList.get(n);
-	}
-
-	private void splitByBookmarks() 
-	{
-		
-	}
-
-	private void splitText(Bookmark nextBookmark) 
-	{
-		
-	}
 
 	private void withoutSplit() {
 		// TODO Auto-generated method stub
 		
+	}
+	public LinkedList<Bookmark> getBookmars() {
+		
+		loadMyBookmarkList();
+		return myBookmarkList;
 	}
 }

@@ -9,5 +9,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/EPUBLibTools"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/PDFBox"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/iText"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/HTMLEntities"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

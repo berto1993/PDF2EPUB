@@ -37,5 +37,10 @@ public class Bookmark
 	{
 		return bookmarkCoordinates;
 	}
+	
+	public int getLevel()
+	{
+		return level;
+	}
 
 }

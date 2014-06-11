@@ -1,6 +1,9 @@
 package packLoader;
 
+import java.io.File;
 import java.io.IOException;
+
+import org.apache.pdfbox.pdmodel.PDDocument;
 
 import com.itextpdf.text.pdf.PdfReader;
 
@@ -21,9 +24,14 @@ public class Loaders
 		return myLoaders;
 	}
 	
-	public PdfReader getPDFReader() throws IOException
+	public PdfReader getPDFReaderItext() throws IOException
 	{
 		return new PdfReader(myPath);
+	}
+
+	public PDDocument getPDFReaderPdfBox() throws IOException {
+		// TODO Auto-generated method stub
+		return PDDocument.load(new File(myPath));
 	}
 
 }

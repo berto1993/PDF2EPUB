@@ -72,35 +72,31 @@ public class pdfboxprueba {
 		System.out.println(pdftoText("C:\\Users\\ALBERTOF\\git\\PDF2EPUB\\PDF2EPUB\\Origin\\PDF\\Oda Nobuna.pdf"));
 	}}*/
 		
-		 conversor();
+		 System.out.println(conversor());
 }
 
-	private static void conversor() {
+	public static String conversor() {
 		try {
-             PDDocument pd = PDDocument.load("C:\\Users\\ALBERTOF\\git\\PDF2EPUB\\PDF2EPUB\\Origin\\PDF\\Oda Nobuna.pdf"); //CARGAR EL PDF
+             PDDocument pd = PDDocument.load(new File("./Origin/PDF/Oda Nobuna.pdf"));//("C:\\Users\\ALBERTOF\\git\\PDF2EPUB\\PDF2EPUB\\Origin\\PDF\\Oda Nobuna.pdf"); //CARGAR EL PDF
              List l = pd.getDocumentCatalog().getAllPages();//NUMERO LAS PAGINAS DEL ARCHIVO
              Object[] obj = l.toArray();//METO EN UN OBJETO LA LISTA DE PAGINAS PARA MANIPULARLA
              PDPage page = (PDPage) obj[4];//PAGE ES LA PAGINA 1 DE LA QUE CONSTA EL ARCHIVO
-             System.out.println("Hay " + obj.length + " hojas");
-             
+           //  System.out.println("Hay " + obj.length + " hojas");
+          return obj[0].getClass().getName();
+             /*   
              PDDocument aux = new PDDocument();
              aux.addPage(page);
              PDFText2HTML html = new PDFText2HTML("utf-8");
-             
             return html.getText(aux);
              
-             for (int i = 0; i < obj.length; i++)
-             {
-            	 
-             }
-             
-             pd.close();//CERRAMOS OBJETO ACROBAT
+         */
          } catch (IOException e) {
              if(e.toString()!=null){
                File archivo=new File("dañado_.txt");//SEPARA LOS DAÑADOS
              }
              System.out.println("Archivo dañado ");// INDICA EN CONSOLA CUALES SON LOS DAÑADOS
              e.printStackTrace();
+             return null;
          }//CATCH}
 	}
 }
