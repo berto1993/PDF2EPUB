@@ -27,18 +27,18 @@ public class BookmarSplitter
 	{
 		java.util.List<HashMap<String, Object>> myAuxBookmarkList = SimpleBookmark.getBookmark(myReader);
 		//only will work if there are bookmarks
-		if (myBookmarkList.size()==0)
+	
+		if (myAuxBookmarkList.size() == 0)
 		{
 			//The text will be converted to EPUB without splitting
 			withoutSplit();
 		}
 		else
 		{
-			levelBookmarks(myAuxBookmarkList, 0);
+			levelBookmarks(myAuxBookmarkList, 1);
 			//The text will be converted to EPUB splitting wiht the first level bookmarks
-		}
-		
-		}
+		}		
+	}
 
 	private  void levelBookmarks(java.util.List<HashMap<String, Object>> pList ,int plevel) 
 	{
@@ -56,6 +56,7 @@ public class BookmarSplitter
 			myBookmarkList.addLast(new Bookmark(pList.get(i), plevel));	
 			levelBookmarks(auxList, plevel + 1);	
 			}	
+
 		}
 	}
 

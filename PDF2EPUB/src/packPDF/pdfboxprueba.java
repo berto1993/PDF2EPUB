@@ -15,6 +15,7 @@ import org.apache.pdfbox.util.PDFText2HTML;
 import org.apache.pdfbox.util.PDFTextStripper;
 
 import com.itextpdf.text.pdf.parser.PdfTextExtractor;
+import com.tecnick.htmlutils.htmlentities.HTMLEntities;
 
 import packTests.LectorPDF;
 
@@ -72,7 +73,11 @@ public class pdfboxprueba {
 		System.out.println(pdftoText("C:\\Users\\ALBERTOF\\git\\PDF2EPUB\\PDF2EPUB\\Origin\\PDF\\Oda Nobuna.pdf"));
 	}}*/
 		
-		 System.out.println(conversor());
+		 //System.out.println(conversor());
+		String html ="tenia que escribirlo";
+		html = html.replaceFirst("que", "ke");
+		System.out.println(html);
+
 }
 
 	public static String conversor() {

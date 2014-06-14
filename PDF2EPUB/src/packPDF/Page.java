@@ -46,7 +46,7 @@ public class Page
 		
 		public String getHtml()
 		{
-			identifyBookmarks();
+			this.identifyBookmarks();
 			return htmlPage;
 		}
 	

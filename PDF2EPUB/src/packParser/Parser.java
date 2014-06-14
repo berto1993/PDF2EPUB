@@ -61,12 +61,12 @@ public class Parser
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		for (int i = 1; i < reader.getNumberOfPages(); i++)
+		for (int i = 0; i < obj.length; i++)
 		{
 			page = (PDPage) obj[i];
 			aux.addPage(page);
 			try {
-				mypages[i-1] = new Page(i,html.getText(aux));
+				mypages[i] = new Page(i,html.getText(aux));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -74,7 +74,6 @@ public class Parser
 			aux.removePage(page);
 		}
 		addBookmars(mypages, bookmarks);
-		System.out.println(mypages.length);
 		if (mypages.length!=0)
 		writeEbook(mypages);
 	}
@@ -86,7 +85,6 @@ public class Parser
 	
 	for (int i = 1; i < mypages.length; i++)
 	{
-		System.out.println(mypages[i-1]);
 		//each page is added as a html file to the epub book
 		book.addSection("page"+i,new Resource(mypages[i-1].getHtml().getBytes(), "page"+i+".html"));
 	
@@ -110,8 +108,9 @@ public class Parser
 		while (it.hasNext())
 		{
 			bookmark = it.next();
+			System.out.println(bookmark.getPage());
 			//each bookmark is added to its page
-			mypages[bookmark.getPage()].addBookmark(bookmark);
+			mypages[bookmark.getPage()-1].addBookmark(bookmark);
 		}
 	}
 }
