@@ -24,8 +24,13 @@ import packTests.PDF2;
 
 public class Parser 
 {
-	public Parser(){}
-	public void parsePDF(String path)
+	private String path;
+	
+	public Parser(String pPath)
+	{
+		path = pPath;
+	}
+	public void parsePDF()
 	{
 		PdfReader reader = null;
 		try {
@@ -91,7 +96,7 @@ public class Parser
 	}	
 	nl.siegmann.epublib.epub.EpubWriter writer =new nl.siegmann.epublib.epub.EpubWriter();
 	try {
-		writer.write(book, new FileOutputStream("C:\\Users\\ALBERTOF\\Desktop\\test1book2.epub"));
+		writer.write(book, new FileOutputStream(/*path.replaceAll(".pdf", ".epub")*/path.substring(0, path.length()-4)+".epub"));
 	} catch (FileNotFoundException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();

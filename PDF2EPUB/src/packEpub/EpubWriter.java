@@ -40,8 +40,9 @@ public class EpubWriter {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}*/
-		Parser par = new Parser();
-		par.parsePDF("./Origin/PDF/Oda Nobuna.pdf");
+		System.out.println(args[0]);
+		Parser par = new Parser(args[0]);
+		par.parsePDF();
 }
 
 }

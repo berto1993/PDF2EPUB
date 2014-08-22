@@ -28,7 +28,7 @@ public class BookmarSplitter
 		java.util.List<HashMap<String, Object>> myAuxBookmarkList = SimpleBookmark.getBookmark(myReader);
 		//only will work if there are bookmarks
 	
-		if (myAuxBookmarkList.size() == 0)
+		if (myAuxBookmarkList == null)
 		{
 			//The text will be converted to EPUB without splitting
 			withoutSplit();
