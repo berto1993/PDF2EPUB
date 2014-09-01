@@ -4,7 +4,11 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Xerces"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/XML-API"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/iText"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/ODFDOM"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/EPUBLibCore"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/EPUBLibTools"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/PDFBox"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/iText"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/HTMLEntities"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
