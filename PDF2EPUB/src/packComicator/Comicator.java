@@ -20,28 +20,47 @@ public class Comicator {
 
 	public static void main(String[] args) 
 	{
-		// TODO Auto-generated method stub
-		String title = null;
+		if (args.length != 1)
+		{
+			help();
+		}
+		if (args[0].equals("help"))
+			help();
+
+		else
+		{
 		LinkedList<Image> pages = new LinkedList<Image>();
+		//The directory where the images are
 		File dir = new File(args[0]);
-    	loadImages(dir, pages);
-    	
+    	System.out.println("Loading images\n");
+		loadImages(dir, pages);
+    	System.out.println("Writing the file \t" + args[0] + ".pdf");
 			try {
-				createPdf(args[0], pages, title);
+				createPdf(args[0], pages);
 			} catch (FileNotFoundException | DocumentException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+		System.out.println("Enjoy your pdf file");
+		}	
     	
     }
 
 
+	private static void help() {
+		System.out.println("This is Comicator, Version 1.0");
+		System.out.println("Usage:");
+		System.out.println("java -jar Comicator.jar <path to the directory or help>\n");
+	}
+
+
 	private static void loadImages(File dir, LinkedList<Image> pages) {
-    	File[] ficheros = dir.listFiles();
+    	//All the files contained in the directory
+		File[] ficheros = dir.listFiles();
     	for (int i = 0; i<ficheros.length; i++)
     	{
-    		System.out.println(ficheros[i].getName());
+    	//If one of the files is directory then
+		//loads that directory recursively
     		if (ficheros[i].isDirectory())
     			loadImages(ficheros[i], pages);
     		else
@@ -57,19 +76,20 @@ public class Comicator {
 	}
     	
 
-	private static void createPdf(String directory,LinkedList<Image> pages, String title) throws FileNotFoundException, DocumentException 
+	private static void createPdf(String directory,LinkedList<Image> pages) throws FileNotFoundException, DocumentException 
 	{
 		Document document = new Document();
-		PdfWriter writer = null;
-			writer = PdfWriter.getInstance(document, new FileOutputStream(new File(directory + ".pdf")));
-			Iterator<Image> it = pages.iterator();
+		//The pdf file is created in the
+		//same location of the initial 
+		//directory
+		PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(new File(directory + ".pdf")));
+		Iterator<Image> it = pages.iterator();
 		Image img = null;
-		document.open();
-		if (title == null)
-			document.addTitle(new File(directory).getName());
-		else
-			document.addTitle(title);
 		
+		document.open();
+		
+		document.addTitle(new File(directory).getName());
+			
 		while (it.hasNext())
 		{
 			img = it.next();
