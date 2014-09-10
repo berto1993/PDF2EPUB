@@ -24,26 +24,27 @@ public class Comicator {
 		{
 			help();
 		}
-		if (args[0].equals("help"))
-			help();
-
 		else
 		{
-		LinkedList<Image> pages = new LinkedList<Image>();
-		//The directory where the images are
-		File dir = new File(args[0]);
-    	System.out.println("Loading images\n");
-		loadImages(dir, pages);
-    	System.out.println("Writing the file \t" + args[0] + ".pdf");
-			try {
-				createPdf(args[0], pages);
-			} catch (FileNotFoundException | DocumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		System.out.println("Enjoy your pdf file");
-		}	
-    	
+			if (args[0].equals("help"))
+				help();
+			else
+			{
+			LinkedList<Image> pages = new LinkedList<Image>();
+			//The directory where the images are
+			File dir = new File(args[0]);
+	    	System.out.println("Loading images\n");
+			loadImages(dir, pages);
+	    	System.out.println("Writing the file \t" + args[0] + ".pdf");
+				try {
+					createPdf(args[0], pages);
+				} catch (FileNotFoundException | DocumentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			System.out.println("Enjoy your pdf file");
+			}	
+		}
     }
 
 
@@ -51,6 +52,7 @@ public class Comicator {
 		System.out.println("This is Comicator, Version 1.0");
 		System.out.println("Usage:");
 		System.out.println("java -jar Comicator.jar <path to the directory or help>\n");
+		System.out.println("Be careful with the name of the images");
 	}
 
 
