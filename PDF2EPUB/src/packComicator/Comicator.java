@@ -8,7 +8,10 @@ import com.itextpdf.text.Image;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfWriter;
 
+import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -16,9 +19,11 @@ import java.net.MalformedURLException;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import javax.imageio.ImageIO;
+
 public class Comicator {
 
-	public static void main(String[] args) 
+	public static void main(String[] args) throws BadElementException, IOException 
 	{
 		if (args.length != 1)
 		{
@@ -45,7 +50,7 @@ public class Comicator {
 			System.out.println("Enjoy your pdf file");
 			}	
 		}
-    }
+		    }
 
 
 	private static void help() {
@@ -68,7 +73,11 @@ public class Comicator {
     		else
     			{
 					try {
-						pages.addLast(Image.getInstance(ficheros[i].toURL()));
+						//if the file it´s not an image fil
+						//it will be skipped
+						if(ficheros[i].getName().contains("jpg")||ficheros[i].getName().contains("png")||ficheros[i].getName().contains("gif"))
+						addImage(ficheros[i], pages);
+						//pages.addLast(Image.getInstance(ficheros[i].toURL()));
 					} catch (BadElementException | IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -77,6 +86,37 @@ public class Comicator {
     	}
 	}
     	
+
+	private static void addImage(File file, LinkedList<Image> pages) throws IOException, BadElementException 
+	{
+		    FileInputStream fis = new FileInputStream(file);  
+	        BufferedImage image = ImageIO.read(fis);
+	        if (image.getWidth() > image.getHeight())
+	        {
+	        	File tempImg = new File(file.getParent() + "\\tempImg\\"+file.getName().substring(0,file.getName().length()-4));
+	        	tempImg.mkdirs();
+	        	splitImages(tempImg, image, (String) file.getName().subSequence(file.getName().length()-3, file.getName().length()));
+	        	loadImages(tempImg, pages);
+	        }
+	        else
+	        {
+	        	pages.addLast(Image.getInstance(file.toURL()));
+	        }
+		
+	}
+
+
+	private static void splitImages(File tempImg, BufferedImage image, String type) throws IOException 
+	{
+		int width = image.getWidth()/2;
+		
+		//ImageIO.write(StartPointX,StartPointY,StartPointX + custom X, StartPointY + custom Y)
+		
+		ImageIO.write(image.getSubimage(0, 0, image.getWidth()/2, image.getHeight()), type , new File(tempImg.getAbsolutePath() + "\\00." + type));
+		ImageIO.write(image.getSubimage(width, 0, width, image.getHeight()), type , new File(tempImg.getAbsolutePath() + "\\01." + type));
+		
+		}
+
 
 	private static void createPdf(String directory,LinkedList<Image> pages) throws FileNotFoundException, DocumentException 
 	{
@@ -95,10 +135,12 @@ public class Comicator {
 		while (it.hasNext())
 		{
 			img = it.next();
-			img.setAlignment(Chunk.ANCHOR);
+			
 			document.setPageSize(new Rectangle(img.getWidth(), img.getHeight()));
+			img.setAbsolutePosition(0, 0);
+			//img.setAlignment(Chunk.ANCHOR);
 			document.newPage();
-				document.add(img);
+			document.add(img);
 		}
 		document.close();
 		
