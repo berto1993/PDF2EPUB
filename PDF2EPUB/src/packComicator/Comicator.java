@@ -26,21 +26,25 @@ public class Comicator {
 	
 	public static void main(String[] args) throws BadElementException, IOException 
 	{
-		if (args.length != 1)
+		if (args.length == 0 || args.length > 2)
 		{
 			help();
 		}
 		else
 		{
-			if (args[0].equals("help"))
-				help();
-			else
-			{
+			
+				boolean forceNSplit = false;
+					
+				if (args[0].equals("-NSplit"))
+					forceNSplit = true;
+				
+				System.out.println(forceNSplit);
+			
 			LinkedList<Image> pages = new LinkedList<Image>();
 			//The directory where the images are
 			File dir = new File(args[0]);
 	    	System.out.println("Loading images\n");
-			loadImages(dir, pages);
+			loadImages(dir, pages, forceNSplit);
 	    	System.out.println("Writing the file \t" + args[0] + ".pdf");
 				try {
 					createPdf(args[0], pages);
@@ -53,18 +57,19 @@ public class Comicator {
 			System.out.println("Enjoy your pdf file");
 			}	
 		}
-		    }
+		    
 
 
 	private static void help() {
-		System.out.println("This is Comicator, Version 1.0");
+		System.out.println("This is Comicator, Version 1.0, by Alberto Fernandez");
 		System.out.println("Usage:");
-		System.out.println("java -jar Comicator.jar <path to the directory or help>\n");
+		System.out.println("java -jar Comicator.jar <path to the directory or help> [Options]\n");
+		System.out.println("Options:\n \t -NSplit: turns off the auto splitting process");
 		System.out.println("Be careful with the name of the images");
 	}
 
 
-	private static void loadImages(File dir, LinkedList<Image> pages) {
+	private static void loadImages(File dir, LinkedList<Image> pages, boolean forceNSplit) {
     	//All the files contained in the directory
 		File[] ficheros = dir.listFiles();
     	for (int i = 0; i<ficheros.length; i++)
@@ -72,14 +77,14 @@ public class Comicator {
     	//If one of the files is directory then
 		//loads that directory recursively
     		if (ficheros[i].isDirectory())
-    			loadImages(ficheros[i], pages);
+    			loadImages(ficheros[i], pages, forceNSplit);
     		else
     			{
 					try {
 						//if the file it´s not an image fil
 						//it will be skipped
 						if(ficheros[i].getName().contains("jpg")||ficheros[i].getName().contains("png")||ficheros[i].getName().contains("gif"))
-						addImage(ficheros[i], pages);
+						addImage(ficheros[i], pages, forceNSplit);
 						//pages.addLast(Image.getInstance(ficheros[i].toURL()));
 					} catch (BadElementException | IOException e) {
 						// TODO Auto-generated catch block
@@ -90,22 +95,27 @@ public class Comicator {
 	}
     	
 
-	private static void addImage(File file, LinkedList<Image> pages) throws IOException, BadElementException 
+	private static void addImage(File file, LinkedList<Image> pages, boolean forceNSplit) throws IOException, BadElementException 
 	{
 		    FileInputStream fis = new FileInputStream(file);  
 	        BufferedImage image = ImageIO.read(fis);
-	        if (image.getWidth() > image.getHeight())
+	        
+	        if (forceNSplit)
 	        {
-	        	File tempImg = new File(file.getParent() + "\\tempImg\\"+file.getName().substring(0,file.getName().length()-4));
-	        	tempImg.mkdirs();
-	        	splitImages(tempImg, image, (String) file.getName().subSequence(file.getName().length()-3, file.getName().length()));
-	        	loadImages(tempImg, pages);
+	        	if (image.getWidth() > image.getHeight())
+		        {
+		        	File tempImg = new File(file.getParent() + "\\tempImg\\"+file.getName().substring(0,file.getName().length()-4));
+		        	tempImg.mkdirs();
+		        	splitImages(tempImg, image, (String) file.getName().subSequence(file.getName().length()-3, file.getName().length()));
+		        	loadImages(tempImg, pages, forceNSplit);
+		        }
+		        else
+		        {
+		        	pages.addLast(Image.getInstance(file.toURL()));
+		        }
 	        }
 	        else
-	        {
 	        	pages.addLast(Image.getInstance(file.toURL()));
-	        }
-		
 	}
 
 
