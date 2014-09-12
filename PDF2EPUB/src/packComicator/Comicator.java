@@ -23,6 +23,7 @@ import javax.imageio.ImageIO;
 
 public class Comicator {
 
+	
 	public static void main(String[] args) throws BadElementException, IOException 
 	{
 		if (args.length != 1)
@@ -43,6 +44,8 @@ public class Comicator {
 	    	System.out.println("Writing the file \t" + args[0] + ".pdf");
 				try {
 					createPdf(args[0], pages);
+					deleteTemp(new File(dir.getAbsolutePath()+"\\tempImg"));
+					
 				} catch (FileNotFoundException | DocumentException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -103,6 +106,21 @@ public class Comicator {
 	        	pages.addLast(Image.getInstance(file.toURL()));
 	        }
 		
+	}
+
+
+	private static void deleteTemp(File tempImg) 
+	{
+		File[] tempFiles = tempImg.listFiles();
+		
+		for (int i = 0 ; i < tempFiles.length; i++ )
+		{
+			if (tempFiles[i].isDirectory())
+				deleteTemp(tempFiles[i]);
+			tempFiles[i].delete();
+		}
+		System.out.println(tempImg.getName());
+		tempImg.delete();
 	}
 
 
