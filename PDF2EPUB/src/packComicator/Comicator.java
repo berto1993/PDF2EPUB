@@ -34,9 +34,11 @@ public class Comicator {
 		{
 			
 				boolean forceNSplit = false;
-					
-				if (args[0].equals("-NSplit"))
+				if (args.length == 2)	
+				{
+					if (args[1].equals("-NSplit"))
 					forceNSplit = true;
+				}
 				
 				System.out.println(forceNSplit);
 			
@@ -102,6 +104,11 @@ public class Comicator {
 	        
 	        if (forceNSplit)
 	        {
+	        	pages.addLast(Image.getInstance(file.toURL()));
+
+	        }
+	        else
+	        {
 	        	if (image.getWidth() > image.getHeight())
 		        {
 		        	File tempImg = new File(file.getParent() + "\\tempImg\\"+file.getName().substring(0,file.getName().length()-4));
@@ -109,13 +116,11 @@ public class Comicator {
 		        	splitImages(tempImg, image, (String) file.getName().subSequence(file.getName().length()-3, file.getName().length()));
 		        	loadImages(tempImg, pages, forceNSplit);
 		        }
-		        else
+	        	else
 		        {
 		        	pages.addLast(Image.getInstance(file.toURL()));
 		        }
-	        }
-	        else
-	        	pages.addLast(Image.getInstance(file.toURL()));
+        	}
 	}
 
 
