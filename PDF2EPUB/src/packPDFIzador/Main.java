@@ -129,7 +129,7 @@ public class Main {
 			
 			while ((linea = br.readLine())!=null)
 			{
-				if (linea.contains("<span>") && linea.contains("</span>") && linea.contains("»"))
+				if ((linea.contains("» <span>") && linea.contains("</span>")) || linea.contains("&#187; <span>"))
 					title = extraerTitulo(linea);
 				
 				if (linea.contains("<img src") && linea.contains("imageanchor"))
@@ -152,7 +152,10 @@ public class Main {
 
 		private static String extraerTitulo(String linea) {
 			// TODO Auto-generated method stub
-			return linea.substring(8, linea.length()-7).trim();
+			int start, end;
+			start = linea.indexOf("<span>")+"<span>".length();
+			end = linea.indexOf("</span>");
+			return linea.substring(start, end).trim();
 		}
 
 
