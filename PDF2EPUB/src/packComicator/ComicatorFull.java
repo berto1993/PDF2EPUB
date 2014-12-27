@@ -56,13 +56,14 @@ public class ComicatorFull {
 						try 
 						{	
 							Comicator.main(ruta.toArray(k));
+							ruta.clear();
 						} 
 						catch (BadElementException | IOException e)
 						{
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-
+						
 					}
 				}
 			}

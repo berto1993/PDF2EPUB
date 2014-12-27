@@ -6,8 +6,11 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.nio.file.Files;
 import java.util.Iterator;
 import java.util.LinkedList;
+
+import org.apache.commons.io.FileUtils;
 
 import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.Chunk;
@@ -98,7 +101,8 @@ public class Main {
 				while (itimg.hasNext())
 				{
 					img = itimg.next();
-					img.setAlignment(Chunk.ALIGN_CENTER);
+					if(img != null)
+					{img.setAlignment(Chunk.ALIGN_CENTER);
 					img.scaleToFit(300, 300);		
 					try {
 						document.add(img);
@@ -106,7 +110,7 @@ public class Main {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					
+					}
 				}
 			document.newPage();
 			document.newPage();
@@ -120,33 +124,37 @@ public class Main {
 		private static void leerHTML(File file, LinkedList<Pagina> paginas, File dir) 
 		{
 		Pagina page = new Pagina();
-		BufferedReader br;
+		BufferedReader br = null;
 		String linea = null;
 		String title = null;
 		
 		try {
-		br = new BufferedReader(new FileReader(file));
+			br = new BufferedReader(new FileReader(file));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 			
-			while ((linea = br.readLine())!=null)
-			{
-				if ((linea.contains("» <span>") && linea.contains("</span>")) || linea.contains("&#187; <span>"))
-					title = extraerTitulo(linea);
-				
-				if (linea.contains("<img src") && linea.contains("imageanchor"))
-					extraerImagen(linea, page, dir);
+			try {
+				while ((linea = br.readLine())!=null)
+				{
+					if ((linea.contains("» <span>") && linea.contains("</span>")) || linea.contains("&#187; <span>"))
+						title = extraerTitulo(linea);
+					
+					if (linea.contains("<img src") && linea.contains("imageanchor"))
+						extraerImagen(linea, page, dir);
+					
+		if(linea.contains("style=\"margin-left: 1em; margin-right: 1em;\"><img border=\"0\" src=\""))
+					extraerImagen2(linea, page, dir, file);
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			if (title == null)
 				title = file.getName();
 			page.setTitle(title);
 			paginas.addLast(page);
-		} catch (IOException | BadElementException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		
-		
 		}
 
 
@@ -159,7 +167,8 @@ public class Main {
 		}
 
 
-		private static void extraerImagen(String linea, Pagina page, File dir) throws BadElementException, MalformedURLException, IOException {
+		private static void extraerImagen(String linea, Pagina page, File dir)
+		{
 			// TODO Auto-generated method stub
 			File auxFile;
 			int start, end;
@@ -168,17 +177,41 @@ public class Main {
 			String photofile = linea.substring(start, end);
 			photofile = photofile.replace('/', '\\');
 			auxFile = new File(dir.getPath()+ "/" + photofile);
-			Image photo = Image.getInstance(auxFile.toURL()); 
+			Image photo = null;
+			try {
+				photo = Image.getInstance(auxFile.toURL());
+			} catch (BadElementException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
 			page.addImage(photo);
 				
 		}
 
 
-		/**
-	     * Creates a PDF document.
-	     * @param filename the path to the new PDF document
-	     * @throws    DocumentException 
-	     * @throws    IOException 
-	     */
-	
+		private static void extraerImagen2(String linea, Pagina page, File dir, File file) {
+			File auxFile;
+			int start, end, i;
+		//	start = linea.indexOf("<img src=\"")+"<img src=\"".length();
+			end = linea.indexOf("\" imageanchor=\"1\"");
+			for (i = end; i > 0 && linea.charAt(i)!='/' ; i--)
+			{}
+			start = i;
+			String photofile = linea.substring(start, end);
+			photofile = photofile.replace('/', '\\');
+			auxFile = new File(file.getPath().replace(".htm", "_files") + "/" + photofile);
+			if (auxFile.exists())
+			{Image photo = null;
+			try {
+				photo = Image.getInstance(auxFile.toURL());
+			} catch (BadElementException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				System.out.println(photofile);
+			} 
+			page.addImage(photo);}
+		}
+
+
+		
 	}
